@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:patient_appointment/core/di/injection.dart';
 import 'package:patient_appointment/core/routes/pages_route.dart';
 import 'package:patient_appointment/core/routes/routes_generator.dart';
 import 'package:patient_appointment/core/services/shared_preferences_singleton.dart';
+import 'package:patient_appointment/core/utils/theme.dart';
+import 'package:patient_appointment/features/home/presentation/view_model/patient_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:patient_appointment/features/home/domain/repo/patient_repo.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Prefs.init();
+  await configureInjection();
+  // FakeDataService.generateFakePatients();
   runApp(const MyApp());
 }
 
@@ -15,11 +21,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      initialRoute: PagesRoutes.splashView,
-      onGenerateRoute: RoutesGenerator.onGenerateRoute,
-      title: 'Patient Appointment',
-      theme: ThemeData(textTheme: GoogleFonts.interTextTheme()),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => PatientProvider(getIt<PatientRepository>()),
+        ),
+      ],
+      child: MaterialApp(
+        initialRoute: PagesRoutes.authView,
+        onGenerateRoute: RoutesGenerator.onGenerateRoute,
+        title: 'Patient Appointment',
+        theme: themeData(context),
+      ),
     );
   }
 }
