@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:patient_appointment/core/routes/pages_route.dart';
 import 'package:patient_appointment/features/auth/presentation/views/auth_view.dart';
 import 'package:patient_appointment/features/auth/presentation/views/opt_view.dart';
-import 'package:patient_appointment/features/home/presentation/view/add_patient_view.dart';
-import 'package:patient_appointment/features/home/presentation/view/patient_view.dart';
+import 'package:patient_appointment/features/doctor/home/presentation/view/add_patient_view.dart';
+import 'package:patient_appointment/features/doctor/home/presentation/view/patient_view.dart';
 import 'package:patient_appointment/features/on_boarding/presentation/view/on_boarding_view.dart';
+import 'package:patient_appointment/features/patient/presentation/views/appointment_booking_view.dart';
+import 'package:patient_appointment/features/patient_or_doctor/presentation/views/patient_or_doctor_view.dart';
 import 'package:patient_appointment/features/splash/presentation/view/splash_view.dart';
 
 class RoutesGenerator {
@@ -22,6 +24,10 @@ class RoutesGenerator {
         return MaterialPageRoute(builder: (_) => const OptView());
       case PagesRoutes.addPatientView:
         return MaterialPageRoute(builder: (_) => const AddPatientView());
+      case PagesRoutes.patientOrDoctorView:
+        return MaterialPageRoute(builder: (_) => const PatientOrDoctorView());
+      case PagesRoutes.appointmentBookingView:
+        return MaterialPageRoute(builder: (_) => const AddAppointmentView());
       default:
         return unDefinedRoute();
     }

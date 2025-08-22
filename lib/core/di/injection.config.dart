@@ -12,17 +12,17 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:hive/hive.dart' as _i979;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:patient_appointment/core/di/hive_module.dart' as _i880;
-import 'package:patient_appointment/features/home/data/data_source/patient_local_data_source/patient_local_data_source.dart'
+import 'package:patient_appointment/features/doctor/home/data/data_source/patient_local_data_source/patient_local_data_source.dart'
     as _i1042;
-import 'package:patient_appointment/features/home/data/data_source/patient_local_data_source/patient_local_data_source_imp.dart'
+import 'package:patient_appointment/features/doctor/home/data/data_source/patient_local_data_source/patient_local_data_source_imp.dart'
     as _i219;
-import 'package:patient_appointment/features/home/data/models/patient_model.dart'
+import 'package:patient_appointment/features/doctor/home/data/models/patient_model.dart'
     as _i656;
-import 'package:patient_appointment/features/home/data/repo/patient_repo_imp.dart'
+import 'package:patient_appointment/features/doctor/home/data/repo/patient_repo_imp.dart'
     as _i974;
-import 'package:patient_appointment/features/home/domain/repo/patient_repo.dart'
+import 'package:patient_appointment/features/doctor/home/domain/repo/patient_repo.dart'
     as _i129;
-import 'package:patient_appointment/features/home/presentation/view_model/patient_provider.dart'
+import 'package:patient_appointment/features/doctor/home/presentation/view_model/patient_provider.dart'
     as _i604;
 
 extension GetItInjectableX on _i174.GetIt {

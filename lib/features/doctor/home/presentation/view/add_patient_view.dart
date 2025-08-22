@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:patient_appointment/features/home/presentation/view_model/patient_provider.dart';
+import 'package:patient_appointment/features/doctor/home/presentation/view_model/patient_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:patient_appointment/features/home/domain/entities/patien_entity.dart';
+import 'package:patient_appointment/features/doctor/home/domain/entities/patien_entity.dart';
 
 class AddPatientView extends StatefulWidget {
-  const AddPatientView({super.key});
+  final PatientEntity? patient; // for editing
+  final int? index; // for editing
+
+  const AddPatientView({super.key, this.patient, this.index});
 
   @override
   State<AddPatientView> createState() => _AddPatientViewState();
@@ -18,10 +21,26 @@ class _AddPatientViewState extends State<AddPatientView> {
   String? _selectedGender;
   DateTime? _appointmentTime;
 
+ @override
+void initState() {
+  super.initState();
+  if (widget.patient != null) {
+    _nameController.text = widget.patient!.name;
+    _ageController.text = widget.patient!.age.toString();
+
+    // ensure gender matches one of the dropdown values
+    if (["Male", "Female", "Other"].contains(widget.patient!.gender)) {
+      _selectedGender = widget.patient!.gender;
+    }
+
+    _appointmentTime = widget.patient!.appointmentTime;
+  }
+}
+
   Future<void> _pickDateTime(BuildContext context) async {
     final date = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: _appointmentTime ?? DateTime.now(),
       firstDate: DateTime(2020),
       lastDate: DateTime(2100),
     );
@@ -29,7 +48,7 @@ class _AddPatientViewState extends State<AddPatientView> {
 
     final time = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay.now(),
+      initialTime: TimeOfDay.fromDateTime(_appointmentTime ?? DateTime.now()),
     );
     if (time == null) return;
 
@@ -49,20 +68,29 @@ class _AddPatientViewState extends State<AddPatientView> {
       final patient = PatientEntity(
         name: _nameController.text.trim(),
         age: int.parse(_ageController.text.trim()),
-        gender: _selectedGender!, // from dropdown
+        gender: _selectedGender!,
         appointmentTime: _appointmentTime!,
-        imageUrl: '',
+        imageUrl: widget.patient?.imageUrl ?? '',
       );
 
-      context.read<PatientProvider>().addPatient(patient);
-      Navigator.pop(context); // back to list
+      if (widget.index != null) {
+        // Editing existing patient
+        context.read<PatientProvider>().updatePatient(widget.index!, patient);
+      } else {
+        // Adding new patient
+        context.read<PatientProvider>().addPatient(patient);
+      }
+
+      Navigator.pop(context);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Add Patient")),
+      appBar: AppBar(
+        title: Text(widget.patient == null ? "Add Patient" : "Edit Patient"),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -87,8 +115,6 @@ class _AddPatientViewState extends State<AddPatientView> {
                 },
               ),
               const SizedBox(height: 12),
-
-              // Gender dropdown
               DropdownButtonFormField<String>(
                 value: _selectedGender,
                 decoration: const InputDecoration(labelText: "Gender"),
@@ -105,7 +131,6 @@ class _AddPatientViewState extends State<AddPatientView> {
                 validator: (val) =>
                     val == null || val.isEmpty ? "Please select gender" : null,
               ),
-
               const SizedBox(height: 12),
               ListTile(
                 title: Text(
@@ -119,7 +144,7 @@ class _AddPatientViewState extends State<AddPatientView> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _savePatient,
-                child: const Text("Save"),
+                child: Text(widget.patient == null ? "Save" : "Update"),
               ),
             ],
           ),

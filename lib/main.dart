@@ -4,9 +4,9 @@ import 'package:patient_appointment/core/routes/pages_route.dart';
 import 'package:patient_appointment/core/routes/routes_generator.dart';
 import 'package:patient_appointment/core/services/shared_preferences_singleton.dart';
 import 'package:patient_appointment/core/utils/theme.dart';
-import 'package:patient_appointment/features/home/presentation/view_model/patient_provider.dart';
+import 'package:patient_appointment/features/doctor/home/presentation/view_model/patient_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:patient_appointment/features/home/domain/repo/patient_repo.dart';
+import 'package:patient_appointment/features/doctor/home/domain/repo/patient_repo.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        initialRoute: PagesRoutes.authView,
+        initialRoute: PagesRoutes.onBoardingView,
         onGenerateRoute: RoutesGenerator.onGenerateRoute,
         title: 'Patient Appointment',
         theme: themeData(context),

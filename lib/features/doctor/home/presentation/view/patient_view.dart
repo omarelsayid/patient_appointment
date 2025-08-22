@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:patient_appointment/core/routes/pages_route.dart';
 import 'package:patient_appointment/core/utils/colors.dart';
-import 'package:patient_appointment/features/home/domain/entities/patien_entity.dart';
-import 'package:patient_appointment/features/home/presentation/view_model/patient_provider.dart';
+import 'package:patient_appointment/features/doctor/home/domain/entities/patien_entity.dart';
+import 'package:patient_appointment/features/doctor/home/presentation/view/add_patient_view.dart';
+import 'package:patient_appointment/features/doctor/home/presentation/view_model/patient_provider.dart';
 import 'package:provider/provider.dart';
 
 class PatientsView extends StatefulWidget {
@@ -19,7 +19,7 @@ class _PatientsViewState extends State<PatientsView> {
     super.initState();
     Future.microtask(
       () => context.read<PatientProvider>().loadPatients(),
-    ); // trigger load
+    );
   }
 
   @override
@@ -31,23 +31,23 @@ class _PatientsViewState extends State<PatientsView> {
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),
-          onPressed: () =>
-              Navigator.pushNamed(context, PagesRoutes.addPatientView),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const AddPatientView(),
+              ),
+            );
+          },
         ),
         appBar: AppBar(
           backgroundColor: AppColors.primaryColor,
           title: const Text("Appointments"),
           bottom: const TabBar(
             tabs: [
-              Tab(
-                child: Text("Upcoming", style: TextStyle(color: Colors.white)),
-              ),
-              Tab(
-                child: Text("Missed", style: TextStyle(color: Colors.white)),
-              ),
-              Tab(
-                child: Text("Completed", style: TextStyle(color: Colors.white)),
-              ),
+              Tab(child: Text("Upcoming", style: TextStyle(color: Colors.white))),
+              Tab(child: Text("Missed", style: TextStyle(color: Colors.white))),
+              Tab(child: Text("Completed", style: TextStyle(color: Colors.white))),
             ],
           ),
         ),
@@ -82,7 +82,20 @@ class _PatientsViewState extends State<PatientsView> {
           ),
           title: Text(patient.name),
           subtitle: Text("${patient.age} years | $formattedDate"),
-          trailing: const Icon(Icons.more_vert),
+          trailing: IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => AddPatientView(
+                    patient: patient,
+                    index: index,
+                  ),
+                ),
+              );
+            },
+          ),
         );
       },
     );

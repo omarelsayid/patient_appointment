@@ -1,7 +1,7 @@
 import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
-import 'package:patient_appointment/features/home/data/data_source/patient_local_data_source/patient_local_data_source.dart';
-import 'package:patient_appointment/features/home/data/models/patient_model.dart';
+import 'package:patient_appointment/features/doctor/home/data/data_source/patient_local_data_source/patient_local_data_source.dart';
+import 'package:patient_appointment/features/doctor/home/data/models/patient_model.dart';
 
 @Injectable(as: PatientLocalDataSource)
 class PatientLocalDataSourceImpl implements PatientLocalDataSource {
@@ -17,5 +17,10 @@ class PatientLocalDataSourceImpl implements PatientLocalDataSource {
   @override
   Future<void> addPatient(PatientModel patient) async {
     await box.add(patient);
+  }
+
+  @override
+  Future<void> updatePatient(int index, PatientModel updatedPatient) async {
+    await box.putAt(index, updatedPatient);
   }
 }

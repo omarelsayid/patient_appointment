@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:patient_appointment/features/home/domain/entities/patien_entity.dart';
-import 'package:patient_appointment/features/home/domain/repo/patient_repo.dart';
+import 'package:patient_appointment/features/doctor/home/domain/entities/patien_entity.dart';
+import 'package:patient_appointment/features/doctor/home/domain/repo/patient_repo.dart';
 
 @injectable
 class PatientProvider extends ChangeNotifier {
@@ -19,6 +19,11 @@ class PatientProvider extends ChangeNotifier {
 
   Future<void> addPatient(PatientEntity patient) async {
     await repository.addPatient(patient);
+    await loadPatients();
+  }
+
+  Future<void> updatePatient(int index, PatientEntity patient) async {
+    await repository.updatePatient(index, patient);
     await loadPatients();
   }
 

@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:patient_appointment/features/home/domain/entities/patien_entity.dart';
+import 'package:patient_appointment/features/doctor/home/domain/entities/patien_entity.dart';
 
 class FakeDataService {
   static Future<void> generateFakePatients() async {
