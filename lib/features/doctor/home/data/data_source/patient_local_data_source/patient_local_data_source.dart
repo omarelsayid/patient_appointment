@@ -4,4 +4,6 @@ abstract class PatientLocalDataSource {
   Future<List<PatientModel>> getPatients();
   Future<void> addPatient(PatientModel patient);
   Future<void> updatePatient(int index, PatientModel updatedPatient);
+  Future<void> markAsCompleted(int index);
+  Future<void> markAsMissed(int index);
 }

@@ -17,9 +17,7 @@ class _PatientsViewState extends State<PatientsView> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-      () => context.read<PatientProvider>().loadPatients(),
-    );
+    Future.microtask(() => context.read<PatientProvider>().loadPatients());
   }
 
   @override
@@ -34,9 +32,7 @@ class _PatientsViewState extends State<PatientsView> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (_) => const AddPatientView(),
-              ),
+              MaterialPageRoute(builder: (_) => const AddPatientView()),
             );
           },
         ),
@@ -45,9 +41,15 @@ class _PatientsViewState extends State<PatientsView> {
           title: const Text("Appointments"),
           bottom: const TabBar(
             tabs: [
-              Tab(child: Text("Upcoming", style: TextStyle(color: Colors.white))),
-              Tab(child: Text("Missed", style: TextStyle(color: Colors.white))),
-              Tab(child: Text("Completed", style: TextStyle(color: Colors.white))),
+              Tab(
+                child: Text("Pending", style: TextStyle(color: Colors.white)),
+              ),
+              Tab(
+                child: Text("Missed", style: TextStyle(color: Colors.white)),
+              ),
+              Tab(
+                child: Text("Completed", style: TextStyle(color: Colors.white)),
+              ),
             ],
           ),
         ),
@@ -55,7 +57,7 @@ class _PatientsViewState extends State<PatientsView> {
             ? const Center(child: CircularProgressIndicator())
             : TabBarView(
                 children: [
-                  _buildList(provider.upcoming),
+                  _buildList(provider.pending),
                   _buildList(provider.missed),
                   _buildList(provider.completed),
                 ],
@@ -82,19 +84,36 @@ class _PatientsViewState extends State<PatientsView> {
           ),
           title: Text(patient.name),
           subtitle: Text("${patient.age} years | $formattedDate"),
-          trailing: IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => AddPatientView(
-                    patient: patient,
-                    index: index,
-                  ),
-                ),
-              );
-            },
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.check_circle, color: Colors.green),
+                tooltip: "Mark as Completed",
+                onPressed: () {
+                  context.read<PatientProvider>().completeAppointment(index);
+                },
+              ),
+              IconButton(
+                icon: const Icon(Icons.cancel, color: Colors.red),
+                tooltip: "Mark as Missed",
+                onPressed: () {
+                  context.read<PatientProvider>().missAppointment(index);
+                },
+              ),
+              IconButton(
+                icon: const Icon(Icons.edit),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) =>
+                          AddPatientView(patient: patient, index: index),
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
         );
       },

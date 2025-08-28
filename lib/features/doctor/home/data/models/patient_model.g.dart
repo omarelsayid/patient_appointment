@@ -22,13 +22,14 @@ class PatientModelAdapter extends TypeAdapter<PatientModel> {
       gender: fields[2] as String,
       appointmentTime: fields[3] as DateTime,
       imageUrl: fields[4] as String,
+      status: fields[5] as AppointmentStatus,
     );
   }
 
   @override
   void write(BinaryWriter writer, PatientModel obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -38,7 +39,9 @@ class PatientModelAdapter extends TypeAdapter<PatientModel> {
       ..writeByte(3)
       ..write(obj.appointmentTime)
       ..writeByte(4)
-      ..write(obj.imageUrl);
+      ..write(obj.imageUrl)
+      ..writeByte(5)
+      ..write(obj.status);
   }
 
   @override

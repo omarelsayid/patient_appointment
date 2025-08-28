@@ -27,5 +27,14 @@ class PatientRepositoryImpl implements PatientRepository {
     final model = PatientModel.fromEntity(patient);
     await localDataSource.updatePatient(index, model);
   }
-}
 
+  @override
+  Future<void> markAsCompleted(int index) async {
+    await localDataSource.markAsCompleted(index);
+  }
+
+  @override
+  Future<void> markAsMissed(int index) async {
+    await localDataSource.markAsMissed(index);
+  }
+}

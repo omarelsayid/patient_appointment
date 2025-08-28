@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:patient_appointment/features/doctor/home/data/models/appointment_status.dart';
 import 'package:patient_appointment/features/doctor/home/domain/entities/patien_entity.dart';
 part 'patient_model.g.dart';
 
@@ -19,12 +20,16 @@ class PatientModel extends HiveObject {
   @HiveField(4)
   String imageUrl;
 
+  @HiveField(5) // new field
+  AppointmentStatus status;
+
   PatientModel({
     required this.name,
     required this.age,
     required this.gender,
     required this.appointmentTime,
     required this.imageUrl,
+    this.status = AppointmentStatus.pending, // default
   });
 
   PatientEntity toEntity() => PatientEntity(
@@ -33,6 +38,7 @@ class PatientModel extends HiveObject {
     gender: gender,
     appointmentTime: appointmentTime,
     imageUrl: imageUrl,
+    status: status, // pass it to entity toao
   );
 
   static PatientModel fromEntity(PatientEntity entity) => PatientModel(
@@ -41,5 +47,6 @@ class PatientModel extends HiveObject {
     gender: entity.gender,
     appointmentTime: entity.appointmentTime,
     imageUrl: entity.imageUrl,
+    status: entity.status ?? AppointmentStatus.pending, // default if null
   );
 }
