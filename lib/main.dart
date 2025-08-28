@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        initialRoute: PagesRoutes.onBoardingView,
+        initialRoute: PagesRoutes.splashView,
         onGenerateRoute: RoutesGenerator.onGenerateRoute,
         title: 'Patient Appointment',
         theme: themeData(context),

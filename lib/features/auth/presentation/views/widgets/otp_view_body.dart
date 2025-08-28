@@ -45,7 +45,7 @@ class _OtpViewBodyState extends State<OtpViewBody> {
                   if (otpFormKey.currentState!.validate()) {
                     Navigator.pushNamedAndRemoveUntil(
                       context,
-                      PagesRoutes.homeView,
+                      PagesRoutes.patientOrDoctorView,
                       (_) => false,
                     );
                   }

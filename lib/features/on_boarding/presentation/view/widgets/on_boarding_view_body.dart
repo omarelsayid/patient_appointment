@@ -76,7 +76,7 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
                   Prefs.setBool(kOnBoardingViewed, true);
                   Navigator.pushNamedAndRemoveUntil(
                     context,
-                    PagesRoutes.patientOrDoctorView,
+                    PagesRoutes.authView,
                     (route) => false,
                   );
                 }

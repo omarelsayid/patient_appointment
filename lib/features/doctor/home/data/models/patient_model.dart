@@ -1,6 +1,7 @@
 import 'package:hive/hive.dart';
 import 'package:patient_appointment/features/doctor/home/data/models/appointment_status.dart';
 import 'package:patient_appointment/features/doctor/home/domain/entities/patien_entity.dart';
+
 part 'patient_model.g.dart';
 
 @HiveType(typeId: 0)

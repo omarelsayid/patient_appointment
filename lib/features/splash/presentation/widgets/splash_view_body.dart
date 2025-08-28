@@ -15,14 +15,11 @@ class _SplashViewBodyState extends State<SplashViewBody> {
   void initState() {
     super.initState();
 
-    final isOnBoardingViewed = Prefs.getBool(kOnBoardingViewed);
     Future.delayed(const Duration(seconds: 2), () {
       if (mounted) {
         Navigator.pushNamed(
           context,
-          isOnBoardingViewed
-              ? PagesRoutes.homeView
-              : PagesRoutes.onBoardingView,
+         PagesRoutes.onBoardingView,
         );
       }
     });
